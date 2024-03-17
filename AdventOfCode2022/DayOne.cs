@@ -4,23 +4,15 @@ public class DayOne(string file)
 {
     public int GetMaxCaloriesOnElf()
     {
-        var maxElfCalories = 0;
-        var currentElfCalories = 0;
-        using StreamReader reader = new StreamReader(file);
-        while (!reader.EndOfStream)
-        {
-            if (int.TryParse(reader.ReadLine(), out var calories))
-            {
-                currentElfCalories += calories;
-            }
-            else
-            {
-                maxElfCalories = Math.Max(maxElfCalories, currentElfCalories);
-                currentElfCalories = 0;
-            }
-        }
-
-        return maxElfCalories;
+        var caloriesByElf = File.ReadAllText(file)
+            .Split(Environment.NewLine + Environment.NewLine)
+            .Select(s => s
+                .Split(Environment.NewLine)
+                .Select(int.Parse)
+                .Sum()
+            ).ToArray();
+        
+        return caloriesByElf.Max();
     }
 
     public int GetMaxCaloriesOfThreeElves()
